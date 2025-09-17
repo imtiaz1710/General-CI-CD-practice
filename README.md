@@ -1,2 +1,2 @@
 # General-CI-CD-practice
-# HI CI
+# HI CI/CD
