@@ -57,6 +57,8 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
+       - name: Checkout code
+         uses: actions/checkout@v4
        - name: Update build version
          run: |
           FILE=build-info.txt
