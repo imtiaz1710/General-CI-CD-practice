@@ -50,3 +50,32 @@ jobs:
         run: |
           echo "📧 Sending deployment notification..."
           echo "Notification sent!"
+          
+  # final Job
+  writeBuildvVrsion:
+    name: Write version
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+       - name: Update build version
+         run: |
+          FILE=build-info.txt
+          VERSION="Build version: $(date +'%Y-%m-%d %H:%M:%S')"
+
+          # Create the file if it doesn't exist
+          if [ ! -f "$FILE" ]; then
+            echo "Creating $FILE..."
+            echo "$VERSION" > "$FILE"
+          else
+            echo "Appending to $FILE..."
+            echo "$VERSION" >> "$FILE"
+          fi
+
+          # Configure Git and push changes
+          git config user.name "Imtiaz CI Bot"
+          git config user.email "ci-bot@users.noreply.github.com"
+          git add build-info.txt
+          git commit -m "build verson updated"
+          git push origin HEAD
+    
+      
